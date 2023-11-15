@@ -109,6 +109,7 @@ function checkCounter(){
 }
 
 range.addEventListener("change",(e)=>{
+    alert("hii");
     passlength=e.target.value
     rangeSetter();
 })

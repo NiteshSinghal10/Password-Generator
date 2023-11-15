@@ -108,7 +108,7 @@ function checkCounter(){
         checkCount++;
 }
 
-range.addEventListener("click",(e)=>{
+range.addEventListener("change",(e)=>{
     passlength=e.target.value
     rangeSetter();
 })

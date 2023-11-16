@@ -26,12 +26,13 @@ let checkCount=1;
 up.checked=true;
 rangeSetter();
 
+// range ko set krne ke liye aur UI pr dikhane ke liye 
 function rangeSetter(){
     range.value=passlength;
     rangedisplay.innerText=passlength;
 }
 
-
+// random selection function hai ye sab 
 function rndNumber(min,max)
 {
     return Math.floor(Math.random()*(max-min))+min;
@@ -54,6 +55,8 @@ function rndSymbols()
 {
     return symbols[rndNumber(0,symbols.length)];
 }
+
+// password ki strength ko check krne ke liye 
 
 function passStrength()
 {
@@ -82,6 +85,7 @@ function passStrength()
     }
 }
 
+// text ko clipboard me copy krne ke liye 
 async function copyClipboard()
 {
     try{
@@ -96,6 +100,7 @@ async function copyClipboard()
     
 }
 
+// mane kitne checkbox tick kiye 
 function checkCounter(){
     checkCount=0;
     if(up.checked===true)
@@ -106,6 +111,22 @@ function checkCounter(){
         checkCount++;
     if(sy.checked===true)
         checkCount++;
+}
+
+function shuffle()
+{
+    let p=password.split('');
+    for(i=0;i<passlength;i++)
+    {
+        // for random number 
+        let j=rndNumber(0,passlength);
+        // swapping 
+        let temp=p[i];
+        p[i]=p[j];
+        p[j]=temp;
+    }
+    password=p.join('');
+    return password;
 }
 
 range.addEventListener("change",(e)=>{
@@ -127,13 +148,20 @@ copybtn.addEventListener('click',()=>{
 })
 
 button.addEventListener('click',()=>{
-    if(checkCount===0)
+    checkCounter();
+    if(checkCount===0 && passlength===0)
         return;
+    else if(checkCount===0 && passlength!==0)
+    {
+        outputScreen.innerText="Select Options"
+        return;
+    }
+        
 
     let passwordLength=passlength
     password="";
     outputScreen.innerText=password;
-    checkCounter();
+    
     if(checkCount>passlength)
     {
         passwordLength=checkCount;
@@ -174,6 +202,6 @@ button.addEventListener('click',()=>{
         password+=funcList[rndNumber(0,funcList.length)](); 
         passwordLength--;
     }
-    outputScreen.innerText=password;
+    outputScreen.innerText=shuffle();
     passStrength();
 })
